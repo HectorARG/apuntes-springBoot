@@ -46,3 +46,20 @@ TIPOS DE ANOTACIONES
 @Repository: Se usa para las clases o interfaces que funcionaran con el acceso a la base de datos.
 Si nuestra clase o interfaz no tiene una especificación clara como @Service, @Repository o @Controller, simplemente recurrimos a @Component y le indicamos que sencillamente es un componente.
 Por otro lado, no es estrictamente necesario que cumplas con colocar una notación especifica, pero es una buena practica.
+
+**Un articulo que explica mejor la implementacion de los parameters, ya que aca solo nos dice como funciona, mas no en que caso emplear este tipo de Query.
+Se usa principalmente para renombrar esos distintos atributos de nuestra entidad DTO ya que esta entidad esta compuesta por atributos foraneaos de 2 o mas tablas, tambien es importante saber su cardinalidad y nombrarla con la anotacion correspondiente @JoinColumn donde hago referencia a que mi entidad DTO tiene columnas de varias tablas,
+Respecto a lo anterior al yo declarar un parametro dentro de la consulta, asi hago referencia a un atributo en especifico, para mejorar la segurdad del atributo hubiera sido de ayuda que en ves de emplear un constructor, empleemos un metodo get, y asi encapsulandolo evitamos un error por inyeccion de JPQL
+
+**¿Para qué usar una transacción?
+El objetivo de una transacción es ejecutar todas las líneas de código de nuestro método y guardar finalmente la información en un repositorio, por ejemplo en nuestro caso, una base de datos. Esto se conoce como commit de nuestra transacción.
+Si por alguna razón algo fallara en nuestro método de Servicio, se daría marcha atrás a los cambios realizados en la base de datos. Esto se conoce como rollback.
+Lo anterior permite que nuestra información, ya sea que se una única base de datos o no, esté íntegra, y no exista posibilidad de datos corruptos por errores o fallas en la ejecución de nuestros métodos Java.
+
+**Las características de una transacción tienen el acrónimo ACID:
+Atomicidad: Las actividades de un método se consideran como una unidad de trabajo. Esto se conoce como Atomicidad. Este concepto asegura que todas las operaciones en una transacción se ejecuta todo o nada.
+Si todas las instrucciones o líneas de código de un método transaccional son ejecutadas con éxito, entonces al finalizar se realiza un commit, es decir, guardado de la información.
+Si alguna de las instrucciones falla se realiza un rollback, es decir, ninguna de la información es guardada en la base de datos o el repositorio donde ser persiste dicha información…
+Consistente: Una vez que termina una transacción (sin importar si ha sido exitosa o no) la información queda en estado consistente, ya que se realizó todo o nada, y por lo tanto los datos no deben estar corruptos en ningún aspecto.
+Aislado: Múltiples usuarios pueden utilizar los métodos transaccionales, sin afectar el acceso de otros usuarios. Sin embargo debemos prevenir errores por accesos múltiples, aislando en la medida de lo posible nuestros métodos transaccionales. El aislamiento normalmente involucra el bloqueo de registros o tablas de base de datos, esto se conoce como locking…
+Durable: Sin importar si hay una caída del servidor, una transacción exitosa debe guardarse y perdurar posterior al termino de una transacción.
